@@ -1,0 +1,10 @@
+import matplotlib.pyplot as plt
+
+grouped_stats = filtered_data.groupby('country')['suicides/100k pop'].agg(['max', 'min', 'median'])
+
+grouped_stats.plot(kind='bar', figsize=(10, 6))
+plt.title('Max, Min, and Median of Suicides per 100k Population by Country')
+plt.xlabel('Country')
+plt.ylabel('Suicides per 100k Population')
+plt.grid(True)
+plt.show()
