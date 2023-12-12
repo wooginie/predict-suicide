@@ -1,0 +1,30 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+
+file_path = '/mnt/data/master.csv'  
+data = pd.read_csv(file_path)
+
+korea_data = data[data['country'] == 'Republic of Korea']
+
+korea_yearly_suicides = korea_data.groupby('year')['suicides_no'].sum()
+
+korea_yearly_gdp_per_capita = korea_data.groupby('year')['gdp_per_capita ($)'].mean()
+
+sns.set(style="whitegrid")
+fig, ax1 = plt.subplots(figsize=(15, 8))
+
+sns.lineplot(x=korea_yearly_suicides.index, y=korea_yearly_suicides, color='crimson', marker='o', ax=ax1)
+ax1.set_xlabel('Year', fontsize=14)
+ax1.set_ylabel('Number of Suicides', color='crimson', fontsize=14)
+ax1.tick_params(axis='y', labelcolor='crimson')
+
+ax2 = ax1.twinx()  
+sns.lineplot(x=korea_yearly_gdp_per_capita.index, y=korea_yearly_gdp_per_capita, color='green', marker='s', ax=ax2)
+ax2.set_ylabel('GDP per Capita ($)', color='green', fontsize=14)  
+ax2.tick_params(axis='y', labelcolor='green')
+
+plt.title('Number of Suicides and GDP per Capita in the Republic of Korea Over Years', fontsize=16)
+plt.tight_layout()
+plt.show()
